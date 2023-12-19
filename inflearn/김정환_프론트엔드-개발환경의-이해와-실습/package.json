@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/YunWonYong/webpack/issues"
   },
-  "homepage": "https://github.com/YunWonYong/webpack#readme"
+  "homepage": "https://github.com/YunWonYong/webpack#readme",
+  "dependencies": {
+    "react": "^18.2.0"
+  }
 }
