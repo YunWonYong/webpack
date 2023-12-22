@@ -31,3 +31,10 @@ npm i -d webpack@4.41.5 webpack-cli@3.3.10
 ```
 node_modules의 .bin directory가 생기고 그 안에 webpack를 사용할 수 있는 스크립트가 생김.
 실행할 때 인자로 필수 옵션이 필요함.
+1. -&nbsp;-mode [development | production | none]
+2. -&nbsp;-entry [index.js와 같은 애플리케이션의 시작점]
+3. -&nbsp;-output [bundling의 결과를 출력할 경로]
+
+```sh
+./node_modules/.bin/webpack --mode development --entry ./src/index.js --output ./dist/index.js
+```
