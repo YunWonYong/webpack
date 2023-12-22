@@ -19,5 +19,9 @@
   "homepage": "https://github.com/YunWonYong/webpack#readme",
   "dependencies": {
     "react": "^18.2.0"
+  },
+  "devDependencies": {
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
   }
 }
