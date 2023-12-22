@@ -38,3 +38,36 @@ node_modules의 .bin directory가 생기고 그 안에 webpack를 사용할 수 
 ```sh
 ./node_modules/.bin/webpack --mode development --entry ./src/index.js --output ./dist/index.js
 ```
+**webpack.config.js** 파일을 생성해 관리하기.
+cli로 실행하기 보다 편리하고 확장에 용이하도록 webpack.config.js를 사용함.
+
+```js
+const path = require("path");
+module.exports = {
+    mode: "development",
+    entry: {
+        index: "./src/index.js"
+    },
+    output: {
+        path: path.resolve("./dist"),
+        filename: "[name].js"
+    }
+};
+```
+(node는 CommonJS를 따르기 때문에 module과 require 함수를 사용함.)
+위 코드를 간단하게 설명하면
+1. require 함수를 사용해 path module을 가져온다. (import)
+2. webpack에서 사용할 정보를 저장하는 객체를 내보낸다. (export)
+3. cli로 실행했을 때 처럼 필수 인자인 mode와 entry, output property를 설정한다.
+4. entry property의 key(지금은 index만 있음)가 output property의 filename property의 값인 \"[name].js\"에 mapping된다.
+
+*package.json* 파일에 build 스크립트를 추가
+```json
+...
+"scripts": {
+...
+    "build": "webpack"
+},
+...
+```
+
