@@ -108,7 +108,7 @@ npm i -D style-loader@1.1.3
 webpack.config.js 파일에 있는 module.rules property의 중 일부다.    
 use property의 인자로 array type의 데이터를 바인딩 하는데 index가 0에 가까울 수록 마지막에 호출된다.    
 즉 css-loader가 먼저 호출되고 다음으로 style-loader가 호출된다.
-```json
+```js
 ...
 {
     "test": /\.css$/,
@@ -126,7 +126,7 @@ npm i -D file-loader@5.0.2
 ```
 **file-loader**는 resource가 browser에 caching 기능 때문에 생기는 문제를 해결하기 위해 resource의 이름을 hash 값으로 변경해주는 기능이 있음.    
 이전에 설정했던 방식으로 설정하면 빌드의 결과를 사용할 때 image file을 불러오는 데 문제가 있음.
-```json
+```js
 ...
 // 이렇게 하면 힘들어짐.
 {
@@ -137,3 +137,25 @@ npm i -D file-loader@5.0.2
 }
 ...
 ```
+빌드의 결과를 쉽게 사용하기 위해 다른 loader들과 조금 다른 방식으로 구성.
+```js
+...
+{
+    test: /\.(png|jpg)$/,
+    loader: "file-loader",
+    options: {
+        publicPath: "./dist/",
+        name: "[name].[ext]?[hash]"
+    }
+}
+...
+```
+위 코드블럭에서 options property가 추가됐고 간단하게 설명하면    
+1. publicPath    
+    빌드의 결과로 생성된 이미지를 불러오는 entryPoint를 설정하는 것이라 생각하면 된다.
+2. name    
+    resource를 bundling할 때 사용할 이름 규칙을 정한 것이다.
+    * name: resource name을 그대로 사용
+    * ext: extension의 약자로 확장자
+    * hash: 기존에는 빌드의 결과로 resource name이였는데 queryParamter로 붙여서 caching기능을 유지하게 도와줌
+
