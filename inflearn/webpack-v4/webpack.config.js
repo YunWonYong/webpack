@@ -25,10 +25,11 @@ module.exports = {
             },
             {
                 test: /\.(png|jpg)$/,
-                loader: "file-loader",
+                loader: "url-loader",
                 options: {
                     publicPath: "./dist/",
-                    name: "[name].[ext]?[hash]"
+                    name: "[name].[ext]?[hash]",
+                    limit: 500 // 500byte로 설정 (1024 = 1k)
                 }
             }
         ]

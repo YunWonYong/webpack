@@ -159,3 +159,48 @@ npm i -D file-loader@5.0.2
     * ext: extension의 약자로 확장자
     * hash: 기존에는 빌드의 결과로 resource name이였는데 queryParamter로 붙여서 caching기능을 유지하게 도와줌
 
+### url loader
+**file-loader**를 사용할 때 최적화할 수 있게 도와주는 **url-loader**이다.    
+resource들을 매번 network을 사용해 다운받아 사용하는 것은 비효율일 수도 있기 때문에 [data url scheme](https://en.wikipedia.org/wiki/Data_URI_scheme)를 사용하여 효율적으로 사용할 수 있게 도와준다.    
+쉽게 말하면 resource를 base64로 encoding해서 사용한다 생각하면 된다.
+```sh
+npm i -D url-loader@3.0.0
+```
+기존의 **file-loader** 설정을 그대로 사용하며, loader를 **url-loader**로 수정하고 options.limit property만 추가했다.
+```js
+...
+{
+    test: /\.(png|jpg)$/,
+    loader: "url-loader",
+    options: {
+        publicPath: "./dist/",
+        name: "[name].[ext]?[hash]",
+        limit: 500 // 500byte로 설정 (1024 = 1k)
+    }
+}
+...
+```
+여기에서 중요한건 options.limit인데 limit으로 설정한 byte(500)보다 큰 file이면 **file-loader**를 사용하고 같거나 작으면 **url-loader**가 base64 enconding해서 사용한다.    
+빌드의 결과 파일인 index.js의 내용을 보면 bg.jpg 파일은 
+```
+./dist/bg.jpg?b45cff0c372984a336aa25f24b9f3e76
+```
+위와 같은데 이유는 bg.jpg file은 500 byte보다 크기 때문이다.
+반면 hamburger_btn.png인 경우 500 byte보다 작기 때문에
+```
+data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP...
+```
+위와 같이 encoding되어 사용하는 것을 확인할 수 있다.
+
+> 강의 예제와 다른 방식으로도 동작하는지 알고 싶어 위 처럼 테스트했지만 강의에서는 image file을 import해서 사용하는 예제를 사용했다.
+```js
+import hanmburgerBtn from "./hamburger_btn.png";
+
+document.addEventListener("DOMContentLoaded", () => {
+    const imageTag = document.createElement("IMG");
+    imageTag.src = hanmburgerBtn;
+    imageTag.alt = "hanmburger button";
+    document.body.appendChild(imageTag);   
+});
+```
+위와 같이 추가로 테스트해볼 수 있다.

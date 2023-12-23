@@ -1,3 +1,9 @@
 import "./index.css";
+import hanmburgerBtn from "./hamburger_btn.png";
 
-console.log("hello world");
+document.addEventListener("DOMContentLoaded", () => {
+    const imageTag = document.createElement("IMG");
+    imageTag.src = hanmburgerBtn;
+    imageTag.alt = "hanmburger button";
+    document.body.appendChild(imageTag);   
+});
