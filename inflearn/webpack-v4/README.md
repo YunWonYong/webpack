@@ -209,3 +209,6 @@ document.addEventListener("DOMContentLoaded", () => {
 1-webpack/2-loader를 해결하면서 알게된 내용    
 url-loader가 file-loader를 갖고 있지 않아 url-loader만 install하고 빌드하면 file-loader를 찾을 수 없다는 에러가 발생한다.    
 file-loader도 install 하니 해결됐다.
+
+### webpack plugin
+**webpack loader**의 목적은 여러 파일들을 bundling할 때 묶을 수 있도록 도와주는 목적이라면 **webpack plugin**의 목적은 빌드의 결과인 자바스크립트 파일을 난독화 하거나 특정 텍스트를 추출하는 용도로 사용한다.
