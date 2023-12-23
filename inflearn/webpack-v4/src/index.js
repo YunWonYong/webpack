@@ -7,3 +7,9 @@ document.addEventListener("DOMContentLoaded", () => {
     imageTag.alt = "hanmburger button";
     document.body.appendChild(imageTag);   
 });
+
+console.log(process.env);
+console.log(TWO);
+console.log(TWOStr);
+console.log(api);
+console.log(api.url);

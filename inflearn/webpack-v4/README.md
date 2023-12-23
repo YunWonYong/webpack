@@ -212,3 +212,10 @@ file-loader도 install 하니 해결됐다.
 
 ### webpack plugin
 **webpack loader**의 목적은 여러 파일들을 bundling할 때 묶을 수 있도록 도와주는 목적이라면 **webpack plugin**의 목적은 빌드의 결과인 자바스크립트 파일을 난독화 하거나 특정 텍스트를 추출하는 용도로 사용한다.
+
+webpack이 기본으로 지원해주는 plugin
+1. BannerPlugin
+2. DefinePlugin    
+환경마다 다르게 사용하는 데이터들을 구성할 때 좋음.    
+객체 형태로도 사용할 수 있음.    
+문자열 데이터를 전달하기 위해서는 json.stringify 함수를 사용해야함.
