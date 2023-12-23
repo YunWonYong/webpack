@@ -95,3 +95,27 @@ module.exports = {
 즉 stylesheet, image, font 등들 여러 형식의 파일들은 module이기 때문에 import가 가능하다.
 
 이것을 가능하게 해주는 것이 **webpack loader**의 역할이다.
+
+css file loader
+```sh
+npm i -D css-loader@3.4.2
+```
+**css-loader**만 사용하면 js에 import된 내용은 추가되지만 DOM에 반영되지 않는다.    
+이 때 필요한 loader가 **style-loader**다.
+```
+npm i -D style-loader@1.1.3
+```
+webpack.config.js 파일에 있는 module.rules property의 중 일부다.    
+use property의 인자로 array type의 데이터를 바인딩 하는데 index가 0에 가까울 수록 마지막에 호출된다.    
+즉 css-loader가 먼저 호출되고 다음으로 style-loader가 호출된다.
+```json
+...
+{
+    test: /\.css$/,
+    use: [
+        "style-loader",
+        "css-loader"
+    ]
+}
+...
+```
