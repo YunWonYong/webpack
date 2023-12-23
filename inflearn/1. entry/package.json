@@ -1,0 +1,21 @@
+{
+    "name": "1.-entry",
+    "version": "1.0.0",
+    "type": "commonjs",
+    "description": "webpack version 4 entry test",
+    "main": "./src/app.js",
+    "scripts": {
+        "build": "webpack",
+        "dev": "lite-server"
+    },
+    "author": "wonyong.yun",
+    "license": "ISC",
+    "engines": {
+        "node": ">=13.14.0"
+    },
+    "devDependencies": {
+        "lite-server": "^2.6.1",
+        "webpack": "^4.41.5",
+        "webpack-cli": "^3.3.10"
+    }
+}
