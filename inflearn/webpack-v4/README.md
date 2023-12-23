@@ -90,3 +90,8 @@ module.exports = {
 
 위는 실습할 때 사용할 브랜치다.
 
+## webpack loader
+**webpack은 모든 파일을 module 취급**한다.
+즉 stylesheet, image, font 등들 여러 형식의 파일들은 module이기 때문에 import가 가능하다.
+
+이것을 가능하게 해주는 것이 **webpack loader**의 역할이다.
