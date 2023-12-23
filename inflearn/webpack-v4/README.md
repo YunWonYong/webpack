@@ -204,3 +204,8 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 ```
 위와 같이 추가로 테스트해볼 수 있다.
+
+
+1-webpack/2-loader를 해결하면서 알게된 내용    
+url-loader가 file-loader를 갖고 있지 않아 url-loader만 install하고 빌드하면 file-loader를 찾을 수 없다는 에러가 발생한다.    
+file-loader도 install 하니 해결됐다.
