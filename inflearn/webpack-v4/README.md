@@ -96,13 +96,13 @@ module.exports = {
 
 이것을 가능하게 해주는 것이 **webpack loader**의 역할이다.
 
-css file loader
+### css file loader
 ```sh
 npm i -D css-loader@3.4.2
 ```
 **css-loader**만 사용하면 js에 import된 내용은 추가되지만 DOM에 반영되지 않는다.    
 이 때 필요한 loader가 **style-loader**다.
-```
+```sh
 npm i -D style-loader@1.1.3
 ```
 webpack.config.js 파일에 있는 module.rules property의 중 일부다.    
@@ -111,10 +111,28 @@ use property의 인자로 array type의 데이터를 바인딩 하는데 index�
 ```json
 ...
 {
-    test: /\.css$/,
-    use: [
+    "test": /\.css$/,
+    "use": [
         "style-loader",
         "css-loader"
+    ]
+}
+...
+```
+### resource(image) file loader
+webpack을 사용해 bundling할 때 image, video, font 등과 같은 파일들을 import하거나 css 파일에서 사용하고 있다면 file loader가 필요하다.    
+```sh
+npm i -D file-loader@5.0.2
+```
+**file-loader**는 resource가 browser에 caching 기능 때문에 생기는 문제를 해결하기 위해 resource의 이름을 hash 값으로 변경해주는 기능이 있음.    
+이전에 설정했던 방식으로 설정하면 빌드의 결과를 사용할 때 image file을 불러오는 데 문제가 있음.
+```json
+...
+// 이렇게 하면 힘들어짐.
+{
+    test: /\.(png|jpg)$/,
+    use: [
+        "file-loader"
     ]
 }
 ...
