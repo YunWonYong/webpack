@@ -192,7 +192,7 @@ data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP...
 ```
 위와 같이 encoding되어 사용하는 것을 확인할 수 있다.
 
-> 강의 예제와 다른 방식으로도 동작하는지 알고 싶어 위 처럼 테스트했지만 강의에서는 image file을 import해서 사용하는 예제를 사용했다.
+> 강의 예제와 다른 방식으로도 동작하는지 알고 싶어 위처럼 테스트했지만 강의에서는 image file을 import해서 사용하는 예제를 사용했다.
 ```js
 import hanmburgerBtn from "./hamburger_btn.png";
 
@@ -347,7 +347,7 @@ module.exports = function myBabelPlugin() {
   }  
 };
 ```
-위 처럼 파일을 만든 후 아래 스크립트를 실행
+위처럼 파일을 만든 후 아래 스크립트를 실행
 
 ```sh
 ./node_modules/.bin/babel .\src\index.js --plugins ./my-babel-plugin.js
@@ -420,7 +420,7 @@ console.log(TWOStr);
 console.log(api.url);
 console.log(api);
 ```
-위 처럼 const imageTag가 var imageTag로 변경됐다.
+위처럼 const imageTag가 var imageTag로 변경됐다.
 
 visitor관련 내용은 [문서](https://babeljs.io/docs/babel-types)에서 확인할 수 있다. ([github](https://github.com/jamiebuilds/babel-handbook/blob/master/translations/ko/plugin-handbook.md))
 
@@ -488,3 +488,33 @@ module.exports = {
 ./node_modules/.bin/babel .\src\index.js 
 ```
 위와 같다.
+
+## babeljs preset
+앞서 소개한 babeljs plugin들을 매번 코드에따라 관리하는 것은 비효율적이다. 효율적으로 babeljs plugin을 관리하기 위해 preset를 이용할 수 있다.    
+preset는 목적에 맞게 transpiling하기 위해 여러 plugin들을 구성해 놓은 것이다.    
+custom preset을 만들어 어떻게 동작하는지 확인해보자.
+```js
+// my-babel-preset.js
+module.exports = function myBabelPreset() {
+    return {
+        plugins: [
+            "@babel/plugin-transform-block-scoping",
+            "@babel/plugin-transform-arrow-functions",
+            "@babel/plugin-transform-strict-mode",
+        ],
+    };
+};
+```
+```js
+// babel.config.js
+module.exports = {
+    presets: [
+        "./my-babel-preset.js"
+    ]
+};
+```
+위처럼 수정한 후 아래 스크립트를 실행하면
+```sh
+./node_modules/.bin/babel .\src\index.js
+```
+똑같은 결과를 얻을 수 있다.
