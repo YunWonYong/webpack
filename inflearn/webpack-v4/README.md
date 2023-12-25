@@ -518,3 +518,58 @@ module.exports = {
 ./node_modules/.bin/babel .\src\index.js
 ```
 똑같은 결과를 얻을 수 있다.
+
+## babeljs를 실무에서 사용해보기.
+자주 사용되는 babeljs preset을 알아보자.
+### prset-env    
+babeljs 7 이전 version에는 ES6~latest가 각각 preset이 별도로 존재했었다. babeljs 7 version에서 preset-env라는 preset으로 하나로 통합됐다.    
+```sh
+npm i -D @babel/preset-env
+```
+위 스크립트로 설치 후 아래 코드로 변경   
+```js
+module.exports = {
+    presets: [
+        "@babel/preset-env",
+    ]
+};
+```
+preset에 targets를 정할 수 있는데 browser 또는 node version을 명시하여 어떤 ES version으로 변경할지 정할 수 있다.
+```js
+module.exports = {
+    presets: [
+        [
+            "@babel/preset-env",
+            {
+                targets: {
+                    chrome: "44",
+                    ie: "5"
+                }
+            }
+        ]
+    ]
+};
+```
+위처럼 수정한 후 index.js 파일에 ```new Promise();``` 코드를 추가한 후 실행해보자.
+```js
+"use strict";
+
+require("./index.css");
+var _hamburger_btn = _interopRequireDefault(require("./hamburger_btn.png"));
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+document.addEventListener("DOMContentLoaded", function () {
+  var imageTag = document.createElement("IMG");
+  imageTag.src = _hamburger_btn["default"];
+  imageTag.alt = "hanmburger button";
+  document.body.appendChild(imageTag);
+});
+console.log(process.env);
+console.log(process.env.NODE_ENV);
+console.log(TWO);
+console.log(TWOStr);
+console.log(api.url);
+console.log(api);
+new Promise();
+```
+결과를 보면 추가한 Promise 관련 코드는 변환되지 않았다. targets property에 ie의 version을 5로 설정했어도 말이다.    
+이런 문제를 해결하기 위해 **polyfill**을 사용해야한다. 

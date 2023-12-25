@@ -14,3 +14,5 @@ console.log(TWO);
 console.log(TWOStr);
 console.log(api.url);
 console.log(api);
+
+new Promise();
