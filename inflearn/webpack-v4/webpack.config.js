@@ -7,9 +7,21 @@ const childProcess = require("child_process");
 //plugins
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+console.log("build node env:", JSON.stringify(process.env.NODE_ENV));
+
+const buildEnv = (process.env.NODE_ENV || "") === ""? "development": process.env.NODE_ENV;
+
+const isDevEnv = () => {
+    return buildEnv === "development";
+};
+
+// const isLiveEnv = () => {
+//     return buildEnv === "production";
+// };
 
 module.exports = {
-    mode: "development",
+    mode: buildEnv,
     entry: {
         index: "./src/index.js"
     },
@@ -28,7 +40,7 @@ module.exports = {
             {
                 test: /\.css$/,
                 use: [
-                    "style-loader",
+                    isDevEnv()? "style-loader": MiniCssExtractPlugin.loader,                    
                     "css-loader"
                 ]
             },
@@ -58,20 +70,16 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: "./public/index.html",
             templateParameters: {
-                env: process.env.NODE_ENV === "development" ? "(개발용)": ""
-                // env: (() => {
-                //     console.log("NODE_ENV:", process.env.NODE_ENV);
-                //     console.log(process.env.NODE_ENV === "development");
-                //     console.log(process.env.NODE_ENV === "development" ? "(개발용)": "");
-                //     console.log(JSON.stringify(process.env.NODE_ENV));
-                //     return process.env.NODE_ENV === "development" ? "(개발용)": ""
-                // })()
+                env: isDevEnv()? "(개발용)": ""
             },
-            minify: process.env.NODE_ENV === "development"? false: {
+            minify: isDevEnv()? false: {
                 collapseWhitespace: true, // bundling 결과인 index.html 에 있는 공백 제거
                 removeComments: true // bundling 결과인 index.html 에 있는 주석 제거
             }
         }),
         new CleanWebpackPlugin(),
+        ...(isDevEnv()? []: [new MiniCssExtractPlugin({
+            filename: "[name].css"
+        })])
     ]
 };

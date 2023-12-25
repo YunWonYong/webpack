@@ -286,3 +286,9 @@ webpack build 시 이전 build와 관련된 파일들을 제거해준다. (이�
 ```sh
 npm -D i clean-webpack-plugin@3.0.0
 ```
+3. mini-css-extract-plugin    
+빌드의 결과물인 bundling된 자바스크립트 파일에서 css 내용을 별도의 파일로 추출해 자바스크립트 파일과 css file을 각각 다운받을 수 있도록 도와주는 plugin이다.    
+이 plugin을 사용하면 **style-loader**가 아닌 plugin에서 지원하는 loader를 사용해야함.
+```sh
+npm -D i mini-css-extract-plugin@0.9.0
+```
