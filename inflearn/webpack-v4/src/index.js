@@ -9,7 +9,8 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 console.log(process.env);
+console.log(process.env.NODE_ENV);
 console.log(TWO);
 console.log(TWOStr);
-console.log(api);
 console.log(api.url);
+console.log(api);

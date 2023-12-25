@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="dist/index.js"></script>
+    <title>Document <%= env %> </title>
+    <!-- <script src="dist/index.js"></script> -->
 </head>
 <body>
     <div id="fileTest"></div>
+    <!-- webpack build 시 여기에 bundling된 파일(index.js)을 다운받는 script tag가 생김.-->
 </body>
 </html>

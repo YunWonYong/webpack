@@ -240,3 +240,43 @@ webpack이 기본으로 지원해주는 plugin
 환경마다 다르게 사용하는 데이터들을 구성할 때 좋음.    
 객체 형태로도 사용할 수 있음.    
 문자열 데이터를 전달하기 위해서는 json.stringify 함수를 사용해야함.
+
+third part plugin
+1. html-webpack-plugin    
+webpack build 시 html 파일도 포함하여 관리하게 도와주는 plugin.    
+즉 빌드의 결과인 bundling file들을 *.html 파일에 내용을 동적으로 추가해줘서 자동화하기 좋음. (의존성을 제거하기 좋음.)    
+(예를 들면 index.html 파일을 src diretory에서 관리한다는 의미.)    
+주의할 점은 이 plugin을 사용하면 file-loader의 publicPath를 지워야 한다.    
+```sh
+npm -D install html-webpack-plugin@3.2.0
+```
+코드는 아래와 같다.
+```js
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+module.exports = {
+...
+    plugins: [
+        ...,
+        new HtmlWebpackPlugin({
+            template: "./public/index.html",
+            templateParameters: { // html file에서 변수처럼 사용할 수 있음. ex) <%= env %>
+                env: process.env.NODE_ENV === "development" ? "(개발용)": ""
+            },
+            minify: process.env.NODE_ENV === "development"? false: {
+                collapseWhitespace: true, // bundling 결과인 index.html 에 있는 공백 제거
+                removeComments: true // bundling 결과인 index.html 에 있는 주석 제거
+            }
+        })
+    ]
+}
+```
+강의를 따라하다 OS가 달라서 NODE_ENV를 설정하는 부분에서 막혔었다.    
+windows인 경우
+```sh
+set NODE_ENV=development&& npm run build
+```
+linux인 경우
+```sh
+NODE_ENV=development npm run build
+```
+위와 같이 하면되는 것 같다.
