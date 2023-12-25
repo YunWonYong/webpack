@@ -6,6 +6,8 @@ const childProcess = require("child_process");
 
 //plugins
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+
 module.exports = {
     mode: "development",
     entry: {
@@ -69,6 +71,7 @@ module.exports = {
                 collapseWhitespace: true, // bundling 결과인 index.html 에 있는 공백 제거
                 removeComments: true // bundling 결과인 index.html 에 있는 주석 제거
             }
-        })
+        }),
+        new CleanWebpackPlugin(),
     ]
 };

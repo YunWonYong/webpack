@@ -245,8 +245,8 @@ third part plugin
 1. html-webpack-plugin    
 webpack build 시 html 파일도 포함하여 관리하게 도와주는 plugin.    
 즉 빌드의 결과인 bundling file들을 *.html 파일에 내용을 동적으로 추가해줘서 자동화하기 좋음. (의존성을 제거하기 좋음.)    
-(예를 들면 index.html 파일을 src diretory에서 관리한다는 의미.)    
 주의할 점은 이 plugin을 사용하면 file-loader의 publicPath를 지워야 한다.    
+(예를 들면 index.html 파일을 src diretory에서 관리한다는 의미.)    
 ```sh
 npm -D install html-webpack-plugin@3.2.0
 ```
@@ -273,10 +273,16 @@ module.exports = {
 강의를 따라하다 OS가 달라서 NODE_ENV를 설정하는 부분에서 막혔었다.    
 windows인 경우
 ```sh
-set NODE_ENV=development&& npm run build
+set NODE_ENV=development && npm run build
 ```
 linux인 경우
 ```sh
 NODE_ENV=development npm run build
 ```
 위와 같이 하면되는 것 같다.
+
+2. clean-webpack-plugin    
+webpack build 시 이전 build와 관련된 파일들을 제거해준다. (이전 build 시 생긴 dist diretory를 삭제한 후 build를 시작한다.)
+```sh
+npm -D i clean-webpack-plugin@3.0.0
+```
