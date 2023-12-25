@@ -306,7 +306,7 @@ Parsing만 하거나 아님 Parsing과 Transforming을 하던 결과를 출력�
 실행 스크립트
 
 ```sh
-npm i @babel/core@7.8.4 @babel/cli@7.8.4
+npm i -D @babel/core@7.8.4 @babel/cli@7.8.4
 ```
 (강의에선 babel를 실행할 때 npx로 하는데 본인은 npm으로 할거임.)    
 실행 스크립트
@@ -423,3 +423,51 @@ console.log(api);
 위 처럼 const imageTag가 var imageTag로 변경됐다.
 
 visitor관련 내용은 [문서](https://babeljs.io/docs/babel-types)에서 확인할 수 있다. ([github](https://github.com/jamiebuilds/babel-handbook/blob/master/translations/ko/plugin-handbook.md))
+
+실무에서 특별한 이유가 아니면 custom plugin을 쓰는 상황은 없을 것 같다.    
+babeljs에서 지원하는 plugin을 알아보자.
+1. block-scoping    
+ES6에서 추가된 const나 let과 같은 변수 선언 예약어를 var로 변경해 주는 plugin이다.
+```sh
+# 설치
+npm i -D @babel/plugin-transform-block-scoping
+# 실행
+./node_modules/.bin/babel .\src\index.js --plugins @babel/plugin-transform-block-scoping
+```
+2. arrow-functions    
+ES6에서 추가된 화살표 함수를 ES5의 함수로 변경해 주는 plugin이다.
+```sh
+# 설치
+npm i -D @babel/plugin-transform-arrow-functions
+# 실행
+./node_modules/.bin/babel .\src\index.js --plugins @babel/plugin-transform-block-scoping --plugins @babel/plugin-transform-arrow-functions
+```
+3. strict-mode    
+use strict mode를 추가해주는 plugin이다.
+```sh
+# 설치
+npm i -D @babel/plugin-transform-strict-mode
+# 실행
+./node_modules/.bin/babel .\src\index.js --plugins @babel/plugin-transform-block-scoping --plugins @babel/plugin-transform-arrow-functions --plugins @babel/plugin-transform-strict-mode
+```
+
+위에 있는 plugin들을 전부 사용하여 결과를 확인해보면
+```js
+"use strict";
+
+import "./index.css";
+import hanmburgerBtn from "./hamburger_btn.png";
+document.addEventListener("DOMContentLoaded", function () {
+  var imageTag = document.createElement("IMG");
+  imageTag.src = hanmburgerBtn;
+  imageTag.alt = "hanmburger button";
+  document.body.appendChild(imageTag);
+});
+console.log(process.env);
+console.log(process.env.NODE_ENV);
+console.log(TWO);
+console.log(TWOStr);
+console.log(api.url);
+console.log(api);
+```
+위와 같은 결과를 얻을 수 있다.
