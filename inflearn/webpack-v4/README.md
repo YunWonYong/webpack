@@ -642,4 +642,7 @@ babeljs 적용 과제를 하던 중 version 문제에 또 직면했다.
 "babel-loader": "^9.1.3", // 8.0.6으로 변경
 "core-js": "^2.6.12", // 2.6.11으로 변경
 ```
-위와 같이 변경했더니 잘 동작했고 궁금해서 babel.config.js file의 내용을 전부 주석처리한 후 실행했더니 webpack build 시 문제없었다.
+위와 같이 변경했더니 잘 동작했고 궁금해서 babel.config.js file의 내용을 전부 주석처리한 후 실행했더니 webpack build 시 문제없었다.    
+문제 풀이 강의에선 async, await ES7에 추가된 예약어를 사용하고 있는 부분에서 build 과정에 실패했다. (난 문제가 없었는데...)    
+이러한 이유로 ```npm i -D regenerator-runtime@0.13.3```을 설치하는 부분도 포함됐다. 설치만하지 적용하는 부분은 없었다.
+
