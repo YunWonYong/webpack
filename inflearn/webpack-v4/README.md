@@ -646,3 +646,10 @@ babeljs 적용 과제를 하던 중 version 문제에 또 직면했다.
 문제 풀이 강의에선 async, await ES7에 추가된 예약어를 사용하고 있는 부분에서 build 과정에 실패했다. (난 문제가 없었는데...)    
 이러한 이유로 ```npm i -D regenerator-runtime@0.13.3```을 설치하는 부분도 포함됐다. 설치만하지 적용하는 부분은 없었다.
 
+## webpack sass-loader
+이건 강의에서 갑자기 실습하는 형식으로 진행되서 구글링 안하고 바로 풀이를 봤다.
+```sh
+npm i -D sass-loader@8.0.0 node-sass@4.13.0
+```
+이것도 module의 version 때문에 너무 힘들었다...
+
