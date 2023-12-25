@@ -33,9 +33,8 @@ module.exports = {
         rules: [
             {
                 test: /\.js$/,
-                use: [
-                    path.resolve("./my-webpack-loader.js")
-                ]
+                loader: "babel-loader",
+                exclude: /node_modules/ //babel loader가 module을 처리하지 않도록 설정
             },
             {
                 test: /\.css$/,

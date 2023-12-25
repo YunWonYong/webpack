@@ -627,3 +627,13 @@ require("core-js/modules/es6.object.to-string.js");
 require("core-js/modules/es6.promise.js");
 ```
 이런 식으로 ES5에서도 사용할 수 있도록 만들어진 코드를 import 해주는 코드가 추가된다.
+
+# webpack과 babeljs를 통합하기
+babel loader를 사용하여 webpack에서 babeljs를 사용할 수 있도록 설정한다.
+```sh
+npm i -D babel-loader corejs@2
+```
+**webpack.config.js** file에 설치한 loader 추가.    
+강의를 최대한 따라가려 했는데 여기부터 node version에 대해 문제가 발생했다.    
+여기서 삽질을 너무 많이 해서 node_modules directory를 몇번 지우고 다시 npm i를 반복했는데도 문제가 발생해서 [github](https://github.com/jeonghwan-kim/lecture-frontend-dev-env/blob/master/package.json) 여기에 있는 package.json의  babeljs 관련 dependensies version들을 복붙하니 해결됐다.
+
