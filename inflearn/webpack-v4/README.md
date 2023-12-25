@@ -635,5 +635,11 @@ npm i -D babel-loader@8.0.6 core-js@2.6.11
 ```
 **webpack.config.js** file에 설치한 loader 추가.    
 강의를 최대한 따라가려 했는데 여기부터 node version에 대해 문제가 발생했다.    
-여기서 삽질을 너무 많이 해서 node_modules directory를 몇번 지우고 다시 npm i를 반복했는데도 문제가 발생해서 [github](https://github.com/jeonghwan-kim/lecture-frontend-dev-env/blob/master/package.json) 여기에 있는 package.json의  babeljs 관련 dependensies version들을 복붙하니 해결됐다.
-
+여기서 삽질을 너무 많이 해서 node_modules directory를 몇번 지우고 다시 npm i를 반복했는데도 문제가 발생해서 [github](https://github.com/jeonghwan-kim/lecture-frontend-dev-env/blob/master/package.json) 여기에 있는 package.json의  babeljs 관련 dependensies version들을 복붙하니 해결됐다.    
+babeljs 적용 과제를 하던 중 version 문제에 또 직면했다.   
+```js
+"@babel/preset-env": "^7.23.6", // 7.7.7으로 변경
+"babel-loader": "^9.1.3", // 8.0.6으로 변경
+"core-js": "^2.6.12", // 2.6.11으로 변경
+```
+위와 같이 변경했더니 잘 동작했고 궁금해서 babel.config.js file의 내용을 전부 주석처리한 후 실행했더니 webpack build 시 문제없었다.
