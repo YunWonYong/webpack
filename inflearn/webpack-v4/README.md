@@ -332,3 +332,94 @@ console.log(api);
 ```
 위 결과를 보면 const나 arrow function를 보면 1번과 3번만 진행된 것을 확인할 수 있다.    
 Transforming 단계를 실행하기 위해선 babeljs의 plugin이 필요하다.
+
+동작 방식을 이해하기 위해 custom plugin을 만들어 적용해보자.
+```js
+// my-bebel-plugin.js
+module.exports = function myBabelPlugin() {
+  return {
+    visitor: {
+        Identifier(path) {
+            const name = path.node.name;
+            console.log(name);
+        }
+    }
+  }  
+};
+```
+위 처럼 파일을 만든 후 아래 스크립트를 실행
+
+```sh
+./node_modules/.bin/babel .\src\index.js --plugins ./my-babel-plugin.js
+```
+결과를 확인해보면 file의 내용 중 변수처럼 사용하는 모든 내용이 출력된다.
+```
+hanmburgerBtn
+document
+addEventListener
+imageTag
+document
+createElement
+imageTag
+src
+hanmburgerBtn
+imageTag
+alt
+...
+```
+visitor.Identifier property가 아닌 visitor.VariableDeclaration property는 const, let, var와 같은 변수를 선언할 때 필요한 예약어를 parameter를 받을 수 있다.
+```js
+...
+visitor: {
+    ...
+    VariableDeclaration(path) {
+        console.log("VariableDeclaration", path.node.kind);
+    }
+...
+```
+결과를 보면
+```
+Identifier hanmburgerBtn
+Identifier document
+Identifier addEventListener
+VariableDeclaration const
+Identifier imageTag
+```
+imageTag 변수를 선언하는 코드에 사용된 const 예약어가 순서에 맞게 출력된다.
+```js
+const imageTag = document.createElement("IMG");
+```
+이제 어떤식으로 동작하는지 이해했으니 const 예약어를 var로 변경하는 코드로 수정해보자.
+```js
+...
+visitor: {
+    ...
+    VariableDeclaration(path) {
+        console.log("VariableDeclaration", path.node.kind);
+        if (path.node.kind !== "var") {
+            console.log(path.node.kind, "=> var");
+            path.node.kind = "var";
+        }
+    }
+...
+```
+결과를 보면
+```js
+import "./index.css";
+import hanmburgerBtn from "./hamburger_btn.png";
+document.addEventListener("DOMContentLoaded", () => {
+  var imageTag = document.createElement("IMG");
+  imageTag.src = hanmburgerBtn;
+  imageTag.alt = "hanmburger button";
+  document.body.appendChild(imageTag);
+});
+console.log(process.env);
+console.log(process.env.NODE_ENV);
+console.log(TWO);
+console.log(TWOStr);
+console.log(api.url);
+console.log(api);
+```
+위 처럼 const imageTag가 var imageTag로 변경됐다.
+
+visitor관련 내용은 [문서](https://babeljs.io/docs/babel-types)에서 확인할 수 있다. ([github](https://github.com/jamiebuilds/babel-handbook/blob/master/translations/ko/plugin-handbook.md))
