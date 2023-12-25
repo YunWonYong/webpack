@@ -471,3 +471,20 @@ console.log(api.url);
 console.log(api);
 ```
 위와 같은 결과를 얻을 수 있다.
+
+babeljs도 webpack처럼 config file을 사용할 수 있도록 기능을 지원해준다.
+```js
+// babel.config.js file
+module.exports = {
+    plugins: [
+        "@babel/plugin-transform-block-scoping",
+        "@babel/plugin-transform-arrow-functions",
+        "@babel/plugin-transform-strict-mode",
+    ],
+};
+```
+실행 명령어는
+```sh
+./node_modules/.bin/babel .\src\index.js 
+```
+위와 같다.
