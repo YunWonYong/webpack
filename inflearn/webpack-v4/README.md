@@ -573,3 +573,57 @@ new Promise();
 ```
 결과를 보면 추가한 Promise 관련 코드는 변환되지 않았다. targets property에 ie의 version을 5로 설정했어도 말이다.    
 이런 문제를 해결하기 위해 **polyfill**을 사용해야한다. 
+
+## babeljs polyfill
+preset-env preset에 있는 plugin들은 ES6 이상의 문법을 ES5로 변환해주는 역할만 수행하고 Promise와 같은 것들은 polyfill을 이용해서 해결해야한다.    
+polyfill은 Promise와 똑같은 기능을 제공하는 무언가를 ES5에서 실행할 수 있도록 코드를 생성해주는 역할을 한다.    
+대표적으로 **core-js**가 있다.
+```js
+module.exports = {
+    presets: [
+        [
+            "@babel/preset-env",
+            {
+                targets: {
+                    chrome: "44",
+                    ie: "5"
+                },
+                // 여기부터 추가
+                useBuiltIns: "usage", // entry or usage
+                corejs: {
+                    version: 2
+                }
+            }
+        ]
+    ]
+};
+```
+위와 같이 추가 후 스크립트를 실행해보면
+```js
+"use strict";
+
+require("core-js/modules/es6.object.to-string.js");
+require("core-js/modules/es6.promise.js");
+require("./index.css");
+var _hamburger_btn = _interopRequireDefault(require("./hamburger_btn.png"));
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+document.addEventListener("DOMContentLoaded", function () {
+  var imageTag = document.createElement("IMG");
+  imageTag.src = _hamburger_btn["default"];
+  imageTag.alt = "hanmburger button";
+  document.body.appendChild(imageTag);
+});
+console.log(process.env);
+console.log(process.env.NODE_ENV);
+console.log(TWO);
+console.log(TWOStr);
+console.log(api.url);
+console.log(api);
+new Promise();
+```
+위와 같은 결과를 얻을 수 있는데 
+```js
+require("core-js/modules/es6.object.to-string.js");
+require("core-js/modules/es6.promise.js");
+```
+이런 식으로 ES5에서도 사용할 수 있도록 만들어진 코드를 import 해주는 코드가 추가된다.

@@ -6,6 +6,10 @@ module.exports = {
                 targets: {
                     chrome: "44",
                     ie: "5"
+                },
+                useBuiltIns: "usage", // entry or usage
+                corejs: {
+                    version: 2
                 }
             }
         ]
