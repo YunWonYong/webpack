@@ -211,7 +211,28 @@ url-loader가 file-loader를 갖고 있지 않아 url-loader만 install하고 �
 file-loader도 install 하니 해결됐다.
 
 ### webpack plugin
-**webpack loader**의 목적은 여러 파일들을 bundling할 때 묶을 수 있도록 도와주는 목적이라면 **webpack plugin**의 목적은 빌드의 결과인 자바스크립트 파일을 난독화 하거나 특정 텍스트를 추출하는 용도로 사용한다.
+**webpack loader**의 목적은 여러 파일들을 bundling할 때 묶을 수 있도록 도와주는 목적이라면 **webpack plugin**의 목적은 빌드의 결과인 자바스크립트 파일을 난독화 하거나 특정 텍스트를 추출하는 용도로 사용한다.    
+즉 **webpack loader**는 전처리기, **webpack plugin**은 후처리기라 생각해도 괜찮을 것 같다.
+
+webpack.config.js 파일에 plugins property name을 사용하고 값으론 array type을 사용한다.
+```js
+...
+plugins: [
+    new webpack.BannerPlugin({
+        banner: `
+            Build Date: ${new Date().toLocaleString()}
+            Commit Version: ${childProcess.execSync("git rev-parse --short HEAD")}
+        `
+    }),
+    new webpack.DefinePlugin({
+        TWO: "1+1",
+        TWOStr: JSON.stringify("1+1"),
+        "api.url": JSON.stringify("https://app.api.com")
+    })
+]
+...
+```
+위 코드블럭처럼 사용하는데 Plugin들은 class형태로 만들고 생성자를 통해 instance하는 형식으로 Plugin을 장착한다.
 
 webpack이 기본으로 지원해주는 plugin
 1. BannerPlugin
