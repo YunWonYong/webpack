@@ -631,7 +631,7 @@ require("core-js/modules/es6.promise.js");
 # webpack과 babeljs를 통합하기
 babel loader를 사용하여 webpack에서 babeljs를 사용할 수 있도록 설정한다.
 ```sh
-npm i -D babel-loader corejs@2
+npm i -D babel-loader@8.0.6 core-js@2.6.11
 ```
 **webpack.config.js** file에 설치한 loader 추가.    
 강의를 최대한 따라가려 했는데 여기부터 node version에 대해 문제가 발생했다.    
