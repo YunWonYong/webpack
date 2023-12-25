@@ -21,6 +21,8 @@
   },
   "homepage": "https://github.com/YunWonYong/webpack#readme",
   "dependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.4",
     "react": "^18.2.0"
   },
   "devDependencies": {

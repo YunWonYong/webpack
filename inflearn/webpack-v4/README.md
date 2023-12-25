@@ -292,3 +292,43 @@ npm -D i clean-webpack-plugin@3.0.0
 ```sh
 npm -D i mini-css-extract-plugin@0.9.0
 ```
+
+# babeljs
+babeljs를 사용하는 목적은 브라우저마다 javascript를 해석하여 실행하는 interpreter들이 다르기 때문에 브라우저들끼리 호환성이 좋지 않다. 이런 단점을 해결하는 것을 cross-browsing이라 하고 babeljs를 이용해 해결할 수 있다. babeljs로 cross-browsing을 지원하기 위해선 transpiling을 해야한다. transpiling은 ES6 이상의 문법 또는 typescript, jsx와 같은 vanilla javascript가 아닌 문법들을 vanilla javascript로 변환해서 그나마 호환성이 좋은 ES5 문법으로 변환하는 것이다.    
+babel는 세 단계로 transpiling을 진행한다.
+1. Parsing (파싱)    
+파일을 읽어 *추상 구문 트리*(**AST**)를 만드는 과정
+2. Transforming (변환)    
+Parsing의 결과물인 **AST**를 사용해 원하는 형태로 변경하는 과정 (필수 단계는 아님)
+3. Printing (출력)    
+Parsing만 하거나 아님 Parsing과 Transforming을 하던 결과를 출력하는 과정
+
+실행 스크립트
+
+```sh
+npm i @babel/core@7.8.4 @babel/cli@7.8.4
+```
+(강의에선 babel를 실행할 때 npx로 하는데 본인은 npm으로 할거임.)    
+실행 스크립트
+```sh
+./node_modules/.bin/babel .\src\index.js
+```
+결과
+```js
+import "./index.css";
+import hanmburgerBtn from "./hamburger_btn.png";
+document.addEventListener("DOMContentLoaded", () => {
+  const imageTag = document.createElement("IMG");
+  imageTag.src = hanmburgerBtn;
+  imageTag.alt = "hanmburger button";
+  document.body.appendChild(imageTag);
+});
+console.log(process.env);
+console.log(process.env.NODE_ENV);
+console.log(TWO);
+console.log(TWOStr);
+console.log(api.url);
+console.log(api);
+```
+위 결과를 보면 const나 arrow function를 보면 1번과 3번만 진행된 것을 확인할 수 있다.    
+Transforming 단계를 실행하기 위해선 babeljs의 plugin이 필요하다.
